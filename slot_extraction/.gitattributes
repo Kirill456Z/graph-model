@@ -1,0 +1,4 @@
+taxi_model filter=lfs diff=lfs merge=lfs -text
+tokenizer filter=lfs diff=lfs merge=lfs -text
+*.bin filter=lfs diff=lfs merge=lfs -text
+*.json filter=lfs diff=lfs merge=lfs -text
