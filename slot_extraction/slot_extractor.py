@@ -5,7 +5,7 @@ import json
 from transformers import BertForQuestionAnswering, BertTokenizerFast, pipeline, BertTokenizer
 
 class SlotExtractor():
-    def __init__(self):
+    def __init__(self, path_to_dir='.'):
         cuda = torch.cuda.is_available()
         if cuda:
             self.device = 0
@@ -13,10 +13,10 @@ class SlotExtractor():
             self.device = 'cpu'
 
         # init model
-        self.tokenizer = BertTokenizer.from_pretrained('tokenizer')
-        self.qa_model = BertForQuestionAnswering.from_pretrained('taxi_model')
+        self.tokenizer = BertTokenizer.from_pretrained(path_to_dir+'/'+'tokenizer')
+        self.qa_model = BertForQuestionAnswering.from_pretrained(path_to_dir+'/'+'taxi_model')
         self.squad_pipeline = pipeline('question-answering', model=self.qa_model, tokenizer=self.tokenizer, device=self.device)
-        with open('questions.json') as f:
+        with open(path_to_dir+'/'+'questions.json') as f:
             self.slots_to_questions = json.load(f)
     
         self.slots = ['taxi-arriveby', 'taxi-departure', 'taxi-destination', 'taxi-leaveat']
